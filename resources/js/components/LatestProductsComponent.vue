@@ -34,7 +34,7 @@ export default {
             <svg width="38" height="16" viewBox="0 0 38 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="38" height="16" rx="8" fill="#FFCE1F"></rect>
             </svg>
-            <p>Новинки</p>
+            <p style="margin-bottom: 0!important;">Новинки</p>
         </h1>
     </div>
     <div class="products">

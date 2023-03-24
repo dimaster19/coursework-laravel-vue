@@ -11,6 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
 
@@ -107,19 +108,35 @@
                         <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </div>
                     <div class="header-cart">
-                        <a class="header-link" href="/cart" >
+                        <a class="header-link" href="/cart">
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             Корзина
                         </a>
-                        <div class="cart-qty"><p class="cart-qty-p"><? if (isset($_SESSION['cart-count'])) echo strval($_SESSION['cart-count']);
-                                                else echo 0; ?></p></div>
+                        <div class="cart-qty">
+                            <p class="cart-qty-p"><? if (isset($_SESSION['cart-count'])) echo strval($_SESSION['cart-count']);
+                                                    else echo 0; ?></p>
+                        </div>
                     </div>
+
+                    @auth
                     <div class="header-account">
                         <a class="header-link" href="/profile">
                             <i class="fa fa-user" aria-hidden="true"></i>
-                            Аккаунт
+                            <div style="text-overflow: ellipsis; overflow: hidden;  white-space: nowrap; width: 100%;">{{auth()->user()->name}}</div>
+
                         </a>
                     </div>
+                    @endauth
+
+                    @guest
+                    <div class="header-account">
+                        <a class="header-link" href="/profile">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            Вход
+                        </a>
+                    </div>
+                    @endguest
+
                 </div>
             </div>
         </div>

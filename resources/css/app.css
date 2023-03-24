@@ -290,11 +290,11 @@ header {
 }
 
 .header-account {
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .header-cart {
-    margin: 0 20px;
+    margin: 0 10px;
 
 }
 
@@ -330,6 +330,7 @@ header {
     color: white!important;
 }
 .header-link {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     font-size: 18px;
