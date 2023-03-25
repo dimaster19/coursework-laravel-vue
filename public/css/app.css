@@ -166,6 +166,7 @@ header {
 }
 
 .header-bottom-left {
+    margin-right: 10px;
     height: 100%;
     width: 20%;
     position: relative;

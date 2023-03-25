@@ -21,8 +21,15 @@ class ProductsPageController extends Controller
         }
 
         $cat =  DB::table('categories')->where('name', '=', $category)->get();
+        $manufactures = Product::where('category_id', $cat[0]->id)->distinct()->pluck('manufacture_id');
+
+
+        $brands = array();
+        foreach ($manufactures as &$item) {
+            $brands[] = DB::table('manufactures')->where('id', $item)->value('name');
+        }
         $products = Product::where('category_id', $cat[0]->id)->orderBy('price')->paginate(10);
-        return view('products', compact('title', 'products'));
+        return view('products', compact('title', 'products', 'brands'));
 
 
     }

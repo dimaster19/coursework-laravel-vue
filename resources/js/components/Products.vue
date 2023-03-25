@@ -2,7 +2,7 @@
 import Slider from '@vueform/slider'
 
 export default {
-    props: ['data'],
+    props: ['data', 'brands' ],
     components: {
       Slider,
     },
@@ -53,18 +53,13 @@ export default {
                 <div class="filter-row">
                     <h4>Бренды</h4>
                     <div class="filter">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <div v-for="item in this.brands" class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" v-bind:id="item">
                             <label class="form-check-label" for="flexCheckDefault">
-                                Бренд №1
+                                {{ item }}
                             </label>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">
-                                Бренд №2
-                            </label>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
