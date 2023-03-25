@@ -19655,7 +19655,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['data']
+});
 
 /***/ }),
 
@@ -19971,10 +19973,56 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "content mt-3 mb-3 radius-content"
 };
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"catalog\"><div class=\"catalog-filter\"><div class=\"filter-row\"><h4>Сортировать по:</h4><div class=\"filter\"><div class=\"dropdown\"><button class=\"btn dropdown-toggle\" type=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\"> цене, сначало дорогие </button><ul class=\"dropdown-menu\"><li><a class=\"dropdown-item\" href=\"#\">цене, сначало недорогие</a></li><li><a class=\"dropdown-item\" href=\"#\">наименованию А-Я</a></li><li><a class=\"dropdown-item\" href=\"#\">наименованию Я-А</a></li></ul></div></div></div><div class=\"filter-row\"><h4>Цена</h4><br><div class=\"range-slider\" id=\"polzunok\"></div><span class=\"range-label\" id=\"result-polzunok\"></span></div><div class=\"filter-row\"><h4>Бренды</h4><div class=\"filter\"><div class=\"form-check\"><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckDefault\"><label class=\"form-check-label\" for=\"flexCheckDefault\"> Бренд №1 </label></div><div class=\"form-check\"><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckChecked\" checked><label class=\"form-check-label\" for=\"flexCheckChecked\"> Бренд №2 </label></div></div></div></div><div class=\"catalog-products\"><h3>Смартфоны</h3><div class=\"products-view\"><button><i class=\"fa fa-th\" aria-hidden=\"true\"></i></button><button><i class=\"fa fa-th-list\" aria-hidden=\"true\"></i></button></div><div class=\"catalog-products-grid\"><div class=\"catalog-product-item\"><div class=\"catalog-product-image\"><img src=\"imgs/product3.jpeg\" alt=\"\"></div><div class=\"catalog-product-price\">14500</div><div class=\"catalog-product-name\">Samsung SM-F936 Galaxy Z Fold4 5G 12/256Gb Greygreen</div><div class=\"add-product\"><a href=\"#\" class=\"add-product-link\">В корзину </a></div></div><div class=\"catalog-product-item\"><div class=\"catalog-product-image\"><img src=\"imgs/product3.jpeg\" alt=\"\"></div><div class=\"catalog-product-price\">14500</div><div class=\"catalog-product-name\">Redmi Note 8 Pro</div><div class=\"add-product\"><a href=\"#\" class=\"add-product-link\">В корзину </a></div></div><div class=\"catalog-product-item\"><div class=\"catalog-product-image\"><img src=\"imgs/product3.jpeg\" alt=\"\"></div><div class=\"catalog-product-price\">14500</div><div class=\"catalog-product-name\">Redmi Note 8 Pro</div><div class=\"add-product\"><a href=\"#\" class=\"add-product-link\">В корзину </a></div></div><div class=\"catalog-product-item\"><div class=\"catalog-product-image\"><img src=\"imgs/product3.jpeg\" alt=\"\"></div><div class=\"catalog-product-price\">14500</div><div class=\"catalog-product-name\">Redmi Note 8 Pro</div><div class=\"add-product\"><a href=\"#\" class=\"add-product-link\">В корзину </a></div></div><div class=\"catalog-product-item\"><div class=\"catalog-product-image\"><img src=\"imgs/product3.jpeg\" alt=\"\"></div><div class=\"catalog-product-price\">14500</div><div class=\"catalog-product-name\">Redmi Note 8 Pro</div><div class=\"add-product\"><a href=\"#\" class=\"add-product-link\">В корзину </a></div></div><div class=\"catalog-product-item\"><div class=\"catalog-product-image\"><img src=\"imgs/product3.jpeg\" alt=\"\"></div><div class=\"catalog-product-price\">14500</div><div class=\"catalog-product-name\">Redmi Note 8 Pro</div><div class=\"add-product\"><a href=\"#\" class=\"add-product-link\">В корзину </a></div></div></div><nav aria-label=\"Page navigation example\"><ul class=\"pagination\"><li class=\"page-item\"><a class=\"page-link\" href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">«</span></a></li><li class=\"page-item\"><a class=\"page-link\" href=\"#\">1</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"#\">2</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"#\">3</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"#\" aria-label=\"Next\"><span aria-hidden=\"true\">»</span></a></li></ul></nav></div></div>", 1);
-var _hoisted_3 = [_hoisted_2];
+var _hoisted_2 = {
+  "class": "catalog"
+};
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"catalog-filter\"><div class=\"filter-row\"><h4>Сортировать по:</h4><div class=\"filter\"><div class=\"dropdown\"><button class=\"btn dropdown-toggle\" type=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\"> цене, сначало дорогие </button><ul class=\"dropdown-menu\"><li><a class=\"dropdown-item\" href=\"#\">цене, сначало недорогие</a></li><li><a class=\"dropdown-item\" href=\"#\">наименованию А-Я</a></li><li><a class=\"dropdown-item\" href=\"#\">наименованию Я-А</a></li></ul></div></div></div><div class=\"filter-row\"><h4>Цена</h4><br><div class=\"range-slider\" id=\"polzunok\"></div><span class=\"range-label\" id=\"result-polzunok\"></span></div><div class=\"filter-row\"><h4>Бренды</h4><div class=\"filter\"><div class=\"form-check\"><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckDefault\"><label class=\"form-check-label\" for=\"flexCheckDefault\"> Бренд №1 </label></div><div class=\"form-check\"><input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckChecked\" checked><label class=\"form-check-label\" for=\"flexCheckChecked\"> Бренд №2 </label></div></div></div></div>", 1);
+var _hoisted_4 = {
+  "class": "catalog-products"
+};
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Смартфоны", -1 /* HOISTED */);
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "products-view"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fa fa-th",
+  "aria-hidden": "true"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fa fa-th-list",
+  "aria-hidden": "true"
+})])], -1 /* HOISTED */);
+var _hoisted_7 = {
+  "class": "catalog-products-grid"
+};
+var _hoisted_8 = {
+  "class": "catalog-product-item"
+};
+var _hoisted_9 = {
+  "class": "catalog-product-image"
+};
+var _hoisted_10 = ["src"];
+var _hoisted_11 = {
+  "class": "catalog-product-price"
+};
+var _hoisted_12 = {
+  "class": "catalog-product-name"
+};
+var _hoisted_13 = ["href"];
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "add-product"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  "class": "add-product-link"
+}, "В корзину ")], -1 /* HOISTED */);
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<nav aria-label=\"Page navigation example\"><ul class=\"pagination\"><li class=\"page-item\"><a class=\"page-link\" href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">«</span></a></li><li class=\"page-item\"><a class=\"page-link\" href=\"#\">1</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"#\">2</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"#\">3</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"#\" aria-label=\"Next\"><span aria-hidden=\"true\">»</span></a></li></ul></nav>", 1);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, _hoisted_3);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.data, function (item) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+      src: 'http://127.0.0.1:8000/imgs/' + item.mainimg,
+      alt: ""
+    }, null, 8 /* PROPS */, _hoisted_10)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.price), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      href: 'http://127.0.0.1:8000/product/' + item.id + '-' + item.name.split(' ').join('-')
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 9 /* TEXT, PROPS */, _hoisted_13)]), _hoisted_14]);
+  }), 256 /* UNKEYED_FRAGMENT */))]), _hoisted_15])])]);
 }
 
 /***/ }),

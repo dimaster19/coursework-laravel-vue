@@ -1,7 +1,7 @@
 @include('header')
 
 <div id="app">
-    <products />
+    <products :data='@json($products)'/>
 </div>
 
 

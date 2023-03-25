@@ -24,7 +24,7 @@
 
     <div class="main-categories">
         <div class="category">
-            <a href="" class="link-categories">
+            <a href="products/smartfony" class="link-categories">
                 <div class="block-categories">
                     <div class="categories-img">
                         <img src="imgs/category1.jpg" alt="">
@@ -36,7 +36,7 @@
             </a>
         </div>
         <div class="category">
-            <a href="" class="link-categories">
+            <a href="products/smartfony" class="link-categories">
                 <div class="block-categories">
                     <div class="categories-img">
                         <img src="imgs/category1.jpg" alt="">
@@ -47,59 +47,6 @@
                 </div>
             </a>
         </div>
-
-        <div class="category">
-            <a href="" class="link-categories">
-                <div class="block-categories">
-                    <div class="categories-img">
-                        <img src="imgs/category1.jpg" alt="">
-                    </div>
-                    <div class="categories-name">
-                        Смартфоны
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="category">
-            <a href="" class="link-categories">
-                <div class="block-categories">
-                    <div class="categories-img">
-                        <img src="imgs/category1.jpg" alt="">
-                    </div>
-                    <div class="categories-name">
-                        Смартфоны
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="category">
-            <a href="" class="link-categories">
-                <div class="block-categories">
-                    <div class="categories-img">
-                        <img src="imgs/category1.jpg" alt="">
-                    </div>
-                    <div class="categories-name">
-                        Смартфоны
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="category">
-            <a href="" class="link-categories">
-                <div class="block-categories">
-                    <div class="categories-img">
-                        <img src="imgs/category1.jpg" alt="">
-                    </div>
-                    <div class="categories-name">
-                        Смартфоны
-                    </div>
-                </div>
-            </a>
-        </div>
-
 
     </div>
 
