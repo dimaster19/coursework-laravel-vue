@@ -35,7 +35,7 @@
                     </a>
                 </div>
                 <div class="search-workers">
-                    <a href="#">Работа в Mobi-Like</a>
+                    <a href="#">Работа в Tech-DPR</a>
                 </div>
                 <div class="phones">
                     <a>+7 (949) 453-19-81</a>

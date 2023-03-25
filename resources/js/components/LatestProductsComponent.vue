@@ -43,7 +43,7 @@ export default {
             <div class="product-image">
                 <img v-bind:src="'imgs/' + one.mainimg" v-bind:alt="one.name">
             </div>
-            <div class="product-price">{{ one.price }}</div>
+            <div class="product-price">{{ one.price }}₽</div>
             <div class="product-name"><a v-bind:href="'/product/' + one.id + '-' + one.name.split(' ').join('-')">{{ one.name }}</a></div>
             <div class="add-product">
                 <a href="" v-bind:data-id="one.id" class="add-product-link">В корзину

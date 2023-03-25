@@ -1,10 +1,28 @@
 <script>
+import Slider from '@vueform/slider'
+
 export default {
     props: ['data'],
+    components: {
+      Slider,
+    },
+    data() {
+        return {
+            value: [20, 20000]
+        };
+    },
+
+    created() {
+
+        // for navigation elements
+        this.data['links'][0]['label'] = '<'
+        this.data['links'][Object.keys(this.data['links']).length - 1]['label'] = '>'
+        // --
+    }
 }
 </script>
 <template>
-    <div class="content mt-3 mb-3 radius-content">
+    <div class="content mt-3 mb-3 radius-content px-3">
         <div class="catalog">
             <div class="catalog-filter">
                 <div class="filter-row">
@@ -26,8 +44,10 @@ export default {
                 </div>
                 <div class="filter-row">
                     <h4>Цена</h4><br>
-                    <div class="range-slider" id="polzunok"></div>
-                    <span class="range-label" id="result-polzunok"></span>
+                    <div style="padding-right: 10px;">
+                        <Slider v-model="value" :max="20000" />
+
+                    </div>
 
                 </div>
                 <div class="filter-row">
@@ -58,13 +78,16 @@ export default {
 
                 </div>
                 <div class="catalog-products-grid">
-                    <div v-for="item in this.data" class="catalog-product-item">
+                    <div v-for="item in this.data.data" class="catalog-product-item">
                         <div class="catalog-product-image">
                             <img v-bind:src="'http://127.0.0.1:8000/imgs/' + item.mainimg" alt="">
                         </div>
-                        <div class="catalog-product-price">{{ item.price }}</div>
+                        <div class="catalog-product-price">{{ item.price }}₽</div>
                         <div class="catalog-product-name">
-                            <a v-bind:href="'http://127.0.0.1:8000/product/' + item.id + '-' + item.name.split(' ').join('-')">{{item.name }}</a>
+                            <a
+                                v-bind:href="'http://127.0.0.1:8000/product/' + item.id + '-' + item.name.split(' ').join('-')">{{
+                                    item.name
+                                }}</a>
                         </div>
                         <div class="add-product">
                             <a href="#" class="add-product-link">В корзину
@@ -74,21 +97,16 @@ export default {
                 </div>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
+                        <li class="page-item" v-for="link in this.data.links"><a class="page-link" v-bind:href="link.url">
+
+                                <div> {{ link.label }}</div>
                             </a>
                         </li>
                     </ul>
                 </nav>
+
             </div>
         </div>
-</div></template>
+    </div>
+</template>
+<style src="@vueform/slider/themes/default.css"></style>

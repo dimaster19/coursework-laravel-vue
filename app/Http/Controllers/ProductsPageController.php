@@ -10,10 +10,18 @@ class ProductsPageController extends Controller
 {
     public function load(Request $request,  $category)
     {
+        switch ($category) {
+            case 'smartfony':
+                $title = 'Смартфоны';
+                break;
+            case 'naushniko':
+                $title = 'Наушники';
+                break;
 
-        $title = $category;
+        }
+
         $cat =  DB::table('categories')->where('name', '=', $category)->get();
-        $products = Product::where('category_id', $cat[0]->id)->orderBy('price')->get();
+        $products = Product::where('category_id', $cat[0]->id)->orderBy('price')->paginate(10);
         return view('products', compact('title', 'products'));
 
 

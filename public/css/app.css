@@ -40,7 +40,6 @@ body {
 
 
 .content {
-    padding: 0 10px;
     max-width: 1160px;
     margin: 0 auto;
     position: relative;
@@ -334,7 +333,7 @@ header {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    font-size: 18px;
+    font-size: 17px;
     text-align: center;
     flex-direction: column;
     align-items: center;
@@ -1113,6 +1112,17 @@ html .ui-button.ui-state-disabled:active {
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     background-color:  #ffa218;
+}
+
+
+.slider-tooltip {
+    background: linear-gradient(0deg, #fc8507, #ffa218)!important;
+    border:  #fc8507!important;
+}
+
+.slider-connect {
+    background: linear-gradient(0deg, #fc8507, #ffa218)!important;
+
 }
 /* Very nice adaptivity */
 

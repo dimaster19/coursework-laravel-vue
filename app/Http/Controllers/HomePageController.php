@@ -21,6 +21,6 @@ class HomePageController extends Controller
     public function getPopular(Request $request)
     {
 
-        return Product::latest()->take(5)->get();
+        return Product::latest('id')->take(5)->get();
     }
 }
