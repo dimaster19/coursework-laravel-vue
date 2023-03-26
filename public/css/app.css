@@ -1125,6 +1125,16 @@ html .ui-button.ui-state-disabled:active {
     background: linear-gradient(0deg, #fc8507, #ffa218)!important;
 
 }
+
+.myselect {
+    margin-right: 10px;
+}
+
+.form-select:focus {
+    border-color: #fc8507; 
+     outline: 0;
+    box-shadow: none;
+}
 /* Very nice adaptivity */
 
 @media (max-width: 1280px) {}

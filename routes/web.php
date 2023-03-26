@@ -28,6 +28,7 @@ Route::get('/', [HomePageController::class, 'load'])->name("/");
 Route::post('/getpopular', [HomePageController::class, 'getPopular'])->name("getPopular");
 Route::get('/product/{name}', [ProductPageController::class, 'load'])->name("/product");
 Route::get('/products/{category}', [ProductsPageController::class, 'load'])->name("products");
+Route::get('/products/{category}/sort', [ProductsPageController::class, 'sort'])->name("products");
 
 
 Route::group(['middleware' => ['guest']], function() {

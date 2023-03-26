@@ -2,13 +2,20 @@
 import Slider from '@vueform/slider'
 
 export default {
-    props: ['data', 'brands' ],
+    props: ['data', 'category', 'brands', 'price_range'],
     components: {
-      Slider,
+        Slider,
     },
     data() {
         return {
-            value: [20, 20000]
+            value: [this.price_range[0], this.price_range[1]],
+            orderby: [
+                { name: 'цене, сначало недорогие', id: 1 },
+                { name: 'цене, сначало дорогие', id: 2 },
+                { name: 'наименованию А-Я', id: 3 },
+                { name: 'наименованию Я-А', id: 4 }],
+            order_id: 1,
+
         };
     },
 
@@ -18,6 +25,19 @@ export default {
         this.data['links'][0]['label'] = '<'
         this.data['links'][Object.keys(this.data['links']).length - 1]['label'] = '>'
         // --
+    },
+    methods: {
+        orderClick: function (e) {
+            console.log('orderClick')
+            this.order_id = e
+            console.log(this.order_id)
+        },
+        sortClick: function () {
+
+            window.location.href = "http://127.0.0.1:8000/products/" + this.category + "/sort/?order_id=" + this.order_id + "&min_price=" + this.value[0] + "&max_price=" + this.value[1]
+
+        }
+
     }
 }
 </script>
@@ -28,16 +48,12 @@ export default {
                 <div class="filter-row">
                     <h4>Сортировать по:</h4>
                     <div class="filter">
-                        <div class="dropdown">
-                            <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                цене, сначало дорогие
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">цене, сначало недорогие</a></li>
-                                <li><a class="dropdown-item" href="#">наименованию А-Я</a></li>
-                                <li><a class="dropdown-item" href="#">наименованию Я-А</a></li>
-                            </ul>
+                        <div class="dropdown myselect">
+
+                            <select class="form-select" v-on:change="orderClick($event.target.value)"
+                                aria-label="Default select example">
+                                <option v-for="item in this.orderby" v-bind:value="item.id">{{ item.name }}</option>
+                            </select>
                         </div>
                     </div>
 
@@ -59,8 +75,12 @@ export default {
                                 {{ item }}
                             </label>
                         </div>
-                        
+
                     </div>
+                </div>
+
+                <div class="filter-row d-flex justify-content-center">
+                    <button class="btn btn-primary" @click="sortClick">Применить</button>
                 </div>
             </div>
             <div class="catalog-products">
