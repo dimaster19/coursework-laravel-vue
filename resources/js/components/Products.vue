@@ -2,7 +2,7 @@
 import Slider from '@vueform/slider'
 
 export default {
-    props: ['data', 'category', 'brands', 'price_range'],
+    props: ['data', 'category', 'brands', 'price_range', 'checked_brands'],
     components: {
         Slider,
     },
@@ -25,16 +25,30 @@ export default {
         this.data['links'][0]['label'] = '<'
         this.data['links'][Object.keys(this.data['links']).length - 1]['label'] = '>'
         // --
+       
+
+        
+
     },
     methods: {
         orderClick: function (e) {
-            console.log('orderClick')
             this.order_id = e
-            console.log(this.order_id)
         },
         sortClick: function () {
 
-            window.location.href = "http://127.0.0.1:8000/products/" + this.category + "/sort/?order_id=" + this.order_id + "&min_price=" + this.value[0] + "&max_price=" + this.value[1]
+
+
+
+            var list = document.getElementsByClassName('form-check-input');
+            var brands = new Array()
+          
+            Array.from(list).forEach(function (el) {
+                if (el.checked) brands.push(el.id)
+            });
+
+
+
+            window.location.href = "http://127.0.0.1:8000/products/" + this.category + "/sort/?order_id=" + this.order_id + "&min_price=" + this.value[0] + "&max_price=" + this.value[1]  + "&brands=" + brands
 
         }
 
@@ -70,9 +84,11 @@ export default {
                     <h4>Бренды</h4>
                     <div class="filter">
                         <div v-for="item in this.brands" class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" v-bind:id="item">
+                            <input v-if="this.checked_brands.includes(item[0].id)"   class="form-check-input" type="checkbox" value="" v-bind:id="item[0].id" checked>
+                            <input v-else class="form-check-input" type="checkbox" value="" v-bind:id="item[0].id">
+
                             <label class="form-check-label" for="flexCheckDefault">
-                                {{ item }}
+                                {{ item[0].name }}
                             </label>
                         </div>
 
