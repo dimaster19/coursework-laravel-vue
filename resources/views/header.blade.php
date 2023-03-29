@@ -113,8 +113,7 @@
                             Корзина
                         </a>
                         <div class="cart-qty">
-                            <p class="cart-qty-p"><? if (isset($_SESSION['cart-count'])) echo strval($_SESSION['cart-count']);
-                                                    else echo 0; ?></p>
+                            <p class="cart-qty-p">{{ session('carts_count') }}</p>
                         </div>
                     </div>
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductsPageController;
+use App\Http\Controllers\CartController;
 
 
 /*
@@ -28,7 +29,9 @@ Route::get('/', [HomePageController::class, 'load'])->name("/");
 Route::post('/getpopular', [HomePageController::class, 'getPopular'])->name("getPopular");
 Route::get('/product/{name}', [ProductPageController::class, 'load'])->name("/product");
 Route::get('/products/{category}', [ProductsPageController::class, 'load'])->name("products");
-Route::get('/products/{category}/sort', [ProductsPageController::class, 'sort'])->name("products");
+Route::get('/products/{category}/sort', [ProductsPageController::class, 'sort'])->name("products-sort");
+Route::get('/cart', [CartController::class, 'load'])->name("cart");
+Route::put('/addtocart', [CartController::class, 'addToCart'])->name("cart");
 
 
 Route::group(['middleware' => ['guest']], function() {

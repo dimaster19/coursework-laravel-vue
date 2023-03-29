@@ -46,7 +46,7 @@ export default {
             <div class="product-price">{{ one.price }}₽</div>
             <div class="product-name"><a v-bind:href="'/product/' + one.id + '-' + one.name.split(' ').join('-')">{{ one.name }}</a></div>
             <div class="add-product">
-                <a href="" v-bind:data-id="one.id" class="add-product-link">В корзину
+                <a href="#" v-bind:data-id="one.id" class="add-product-link">В корзину
                 </a>
             </div>
         </div>

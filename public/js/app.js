@@ -19825,7 +19825,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 8 /* PROPS */, _hoisted_5)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(one.price) + "₽", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: '/product/' + one.id + '-' + one.name.split(' ').join('-')
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(one.name), 9 /* TEXT, PROPS */, _hoisted_8)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-      href: "",
+      href: "#",
       "data-id": one.id,
       "class": "add-product-link"
     }, "В корзину ", 8 /* PROPS */, _hoisted_10)])], 8 /* PROPS */, _hoisted_3);
@@ -20268,6 +20268,68 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/cartAction.js":
+/*!************************************!*\
+  !*** ./resources/js/cartAction.js ***!
+  \************************************/
+/***/ (() => {
+
+$(function () {
+  function showCartCount(count) {
+    $('.cart-qty-p').text(count);
+  }
+  function delCartItem(id, count) {
+    location.reload();
+
+    // document.getElementById(id).remove();
+    // $('.cart-qty').text(count);
+  }
+
+  $('.add-product-link').on('click', function (e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    $.ajax({
+      url: 'addtocart',
+      type: 'PUT',
+      data: {
+        cart: 'add',
+        id: id
+      },
+      dataType: 'json',
+      success: function success(res) {},
+      error: function error() {
+        alert('Error');
+      }
+    });
+    alert('Тест');
+  });
+  $('.del-product-link').on('click', function (e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    $.ajax({
+      url: 'cartaction',
+      type: 'GET',
+      data: {
+        cart: 'del',
+        id: id
+      },
+      dataType: 'json',
+      success: function success(res) {
+        if (res.code == 'deleted') {
+          delCartItem(res.answer, res.count);
+        } else {
+          alert(res.answer);
+        }
+      },
+      error: function error() {
+        alert('Error');
+      }
+    });
+  });
+});
 
 /***/ }),
 
@@ -38765,7 +38827,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Product_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Product.vue */ "./resources/js/components/Product.vue");
 /* harmony import */ var _components_Register_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Register.vue */ "./resources/js/components/Register.vue");
 /* harmony import */ var _components_Products_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Products.vue */ "./resources/js/components/Products.vue");
+/* harmony import */ var _cartAction__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./cartAction */ "./resources/js/cartAction.js");
+/* harmony import */ var _cartAction__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_cartAction__WEBPACK_IMPORTED_MODULE_6__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 

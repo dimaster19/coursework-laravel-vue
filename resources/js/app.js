@@ -1,4 +1,6 @@
 require('./bootstrap');
+
+
 import { createApp } from 'vue';
 import Latest from './components/LatestProductsComponent.vue'
 import Welcome from './components/Welcome.vue'
