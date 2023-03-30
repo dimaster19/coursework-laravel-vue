@@ -113,7 +113,7 @@
                             Корзина
                         </a>
                         <div class="cart-qty">
-                            <p class="cart-qty-p">{{ session('carts_count') }}</p>
+                            <p class="cart-qty-p">{{ session('cart_count') }}</p>
                         </div>
                     </div>
 

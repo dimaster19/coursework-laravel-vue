@@ -86,7 +86,7 @@ export default {
                         <div class="availability-true">Есть в наличии</div>
                     </div>
                     <form action="" class="item-to-cart mt-2">
-                        <input type="number" id="itemCounr" class="form-control" min="1" value="1"
+                        <input type="number" id="itemCounr" class="form-control d-none" min="1" value="1"
                             v-bind:max="this.data.count">
                         <button type="submit" class="btn btn-primary">В корзину</button>
                     </form>

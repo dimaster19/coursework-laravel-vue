@@ -1,8 +1,11 @@
 <script>
 export default {
-    setup: () => ({
-        title: 'How To Install Vue 3 in Laravel 8 From Scratch'
-    })
+    props: ['products', 'totalprice'],
+
+    mounted() {
+        console.log (this.products)
+        console.log (this.totalprice)
+    }
 }
 </script>
 <template>
@@ -10,31 +13,33 @@ export default {
      <h1>Корзина</h1>
      <div class="cart-items">
        
-                 <div class="cart-item " id="<?echo $item->getId();?>">
+                 <div v-if="this.products !== null" v-for="item in this.products"  class="cart-item " :id="item.id">
                      <div class="cart-product">
                          <div class="cart-product-img">
-                             <img src="img/<? echo $item->getMainImage(); ?>" alt="">
+                            <img v-bind:src="'http://127.0.0.1:8000/imgs/' + item.mainimg" alt="">
                          </div>
                          <div class="cart-product-name">
-                             <a href="/product/<? echo str_replace(" ", "-", $item->getName()) ?>"><? echo $item->getName(); ?></a>
+                            <a v-bind:href="'http://127.0.0.1:8000/product/' + item.id + '-' + item.name.split(' ').join('-')">{{ item.name }}</a>
                          </div>
                      </div>
-                     <div class="cart-count item-to-cart"><input type="number" id="itemCount" class="form-control" min="1" value="1" max="<? echo $item->getCount(); ?>"></div>
+                     <div class="cart-count item-to-cart"><input type="number" id="itemCount" class="form-control" min="1" value="1" :max="item.count"></div>
                      <div class="cart-total">
-                         <p><? echo $item->getPrice(); ?></p>
+                         <p>{{ item.price }}</p>
                      </div>
                      <div class="cart-remove">
-                         <a href="" class="del-product-link" data-id="<? echo $item->getId(); ?>"><i class="fa fa-minus" aria-hidden="true"></i>
+                         <a href="" class="del-product-link" :data-id="item.id"><i class="fa fa-minus" aria-hidden="true"></i>
                          </a>
                      </div>
                  </div>
+                 <div v-else>
+                    <h3>{{ this.desc }}</h3>
+                 </div>
       
          <div class="cart-item d-flex w-100" style="justify-content: center">
-             <div style="font-size: 18px; font-weight: 700; margin: 0 20px" id="totalPrioce">Итого: <span style="color: green">'.$totalPrice.'&nbsp&#8381</span></div>
-             <div style="font-size: 18px; font-weight: 700; margin: 0 20px" id="totalCount">Количество: <span style="color: green">'.$_SESSION['cart-count'].'</span></div>
+             <div style="font-size: 18px; font-weight: 700; margin: 0 20px" id="totalPrioce">Итого: <span style="color: green">{{ totalprice }} ₽</span></div>
+             <div style="font-size: 18px; font-weight: 700; margin: 0 20px" id="totalCount">Количество: <span style="color: green">0</span></div>
  
          </div>
-         ';} ?>
      </div>
  
      <div class="cart-form">

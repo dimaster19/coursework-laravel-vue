@@ -8,7 +8,6 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 
-use function PHPSTORM_META\type;
 
 class ProductsPageController extends Controller
 {
@@ -39,9 +38,9 @@ class ProductsPageController extends Controller
         $price_range = array();
         $price_range[] = $prices->min('price');
         $price_range[] = $prices->max('price');
+        $checked_brands = $brands;
 
-
-        return view('products', compact('title',  'products', 'category', 'brands', 'price_range'));
+        return view('products', compact('title',  'products', 'category', 'brands', 'checked_brands','price_range'));
     }
 
     public function sort(Request $request,  $category)

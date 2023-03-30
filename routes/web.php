@@ -31,7 +31,7 @@ Route::get('/product/{name}', [ProductPageController::class, 'load'])->name("/pr
 Route::get('/products/{category}', [ProductsPageController::class, 'load'])->name("products");
 Route::get('/products/{category}/sort', [ProductsPageController::class, 'sort'])->name("products-sort");
 Route::get('/cart', [CartController::class, 'load'])->name("cart");
-Route::put('/addtocart', [CartController::class, 'addToCart'])->name("cart");
+Route::get('/addtocart', [CartController::class, 'addToCart'])->name("cart");
 
 
 Route::group(['middleware' => ['guest']], function() {

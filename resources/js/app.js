@@ -7,6 +7,7 @@ import Welcome from './components/Welcome.vue'
 import Product from './components/Product.vue'
 import Register from './components/Register.vue'
 import Products from './components/Products.vue'
+import Cart from './components/Cart.vue'
 
 
 
@@ -16,6 +17,7 @@ app.component('hello-world', Welcome)
 app.component('product', Product)
 app.component('register', Register)
 app.component('products', Products)
+app.component('cart', Cart)
 
 app.mount('#app');
 

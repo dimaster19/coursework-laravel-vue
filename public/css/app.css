@@ -1135,6 +1135,28 @@ html .ui-button.ui-state-disabled:active {
      outline: 0;
     box-shadow: none;
 }
+
+
+.del-product
+{
+    position: absolute;
+    z-index: 50;
+    text-align: center;
+    width: 100%;
+    top: 40%;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.del-product a {
+    padding: 5px;
+    position: relative;
+    background-color: red;
+    color: white!important;
+    display: block;
+}
+
+
 /* Very nice adaptivity */
 
 @media (max-width: 1280px) {}
