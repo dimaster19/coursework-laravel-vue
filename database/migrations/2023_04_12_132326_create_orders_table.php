@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('status');
             $table->integer('count');
             $table->float('price', 10, 2);
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('product_id');
 
             $table->foreign('user_id')->references('id')->on('users');

@@ -19598,10 +19598,87 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['products', 'totalprice'],
+  data: function data() {
+    return {
+      items: null,
+      totalprice: 0,
+      desc: 'Корзина пуста',
+      name: '',
+      phone: '',
+      comments: '',
+      delivery: false
+    };
+  },
   mounted: function mounted() {
-    console.log(this.products);
-    console.log(this.totalprice);
+    var _this = this;
+    axios.get('http://127.0.0.1:8000/getcartdata').then(function (response) {
+      _this.items = response.data[0];
+      _this.totalprice = response.data[1];
+      console.log(_this.items);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  },
+  methods: {
+    delFromCart: function delFromCart(e) {
+      var _this2 = this;
+      axios.get('http://127.0.0.1:8000/delfromcart', {
+        params: {
+          id: e.getAttribute('data-id')
+        }
+      }).then(function (response) {
+        if (response.data[0] != 0) {
+          _this2.items = response.data[0];
+          _this2.totalprice = response.data[1];
+        } else {
+          _this2.items = null;
+          _this2.totalprice = 0;
+        }
+        var qty = document.getElementsByClassName('cart-qty-p')[0];
+        qty.textContent = Number(document.getElementsByClassName('cart-qty-p')[0].textContent) - 1;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    sendOrder: function sendOrder() {
+      // delivery type
+      if (document.getElementById('radio-dostavka').checked) {
+        this.delivery = true;
+      } else if (document.getElementById('radio-vivoz').checked) {
+        this.delivery = false;
+      }
+      // -------------
+
+      if (this.items != null || this.items != undefined) {
+        if (this.name != '' || this.phone != '') {
+          console.log(this.delivery);
+          axios.post('http://127.0.0.1:8000/addorder', {
+            name: this.name,
+            phone: this.phone,
+            delivery: this.delivery
+          }).then(function (response) {
+            alert('Заказ оформлен');
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        } else alert('Заполните все поля формы');
+      } else {
+        alert('Корзина пуста');
+      }
+    },
+    changeCount: function changeCount(e) {
+      if (Number(e.value) > Number(e.max)) e.value = e.max;else if (Number(e.value) < Number(e.min)) e.value = e.min;
+      axios.get('http://127.0.0.1:8000/cartcount', {
+        params: {
+          id: e.getAttribute('data-id'),
+          count: e.value
+        }
+      }).then(function (response) {
+        console.log('Значение товара изменено');
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
   }
 });
 
@@ -19645,21 +19722,6 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response);
         if (response.data == false) alert('Товар уже есть в корзине');else {
-          var qty = document.getElementsByClassName('cart-qty-p')[0];
-          qty.textContent = response.data;
-        }
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    delFromCartClick: function delFromCartClick(e) {
-      var id = e.getAttribute('data-id');
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:8000/addtocart', {
-        params: {
-          id: id
-        }
-      }).then(function (response) {
-        if (response.data == 0) alert('Товар уже есть в корзине');else {
           var qty = document.getElementsByClassName('cart-qty-p')[0];
           qty.textContent = response.data;
         }
@@ -19767,6 +19829,22 @@ __webpack_require__.r(__webpack_exports__);
         if (el.checked) brands.push(el.id);
       });
       window.location.href = "http://127.0.0.1:8000/products/" + this.category + "/sort/?order_id=" + this.order_id + "&min_price=" + this.value[0] + "&max_price=" + this.value[1] + "&brands=" + brands;
+    },
+    toCartClick: function toCartClick(e) {
+      var id = e.getAttribute('data-id');
+      axios.get('http://127.0.0.1:8000/addtocart', {
+        params: {
+          id: id
+        }
+      }).then(function (response) {
+        console.log(response);
+        if (response.data == false) alert('Товар уже есть в корзине');else {
+          var qty = document.getElementsByClassName('cart-qty-p')[0];
+          qty.textContent = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -19850,21 +19928,25 @@ var _hoisted_9 = ["href"];
 var _hoisted_10 = {
   "class": "cart-count item-to-cart"
 };
-var _hoisted_11 = ["max"];
+var _hoisted_11 = ["data-id", "max"];
 var _hoisted_12 = {
   "class": "cart-total"
 };
 var _hoisted_13 = {
   "class": "cart-remove"
 };
-var _hoisted_14 = ["data-id"];
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fa fa-minus",
-  "aria-hidden": "true"
-}, null, -1 /* HOISTED */);
-var _hoisted_16 = [_hoisted_15];
-var _hoisted_17 = {
+var _hoisted_14 = {
+  style: {
+    "color": "red"
+  },
+  "class": "del-product-link"
+};
+var _hoisted_15 = ["data-id"];
+var _hoisted_16 = {
   key: 1
+};
+var _hoisted_17 = {
+  "class": "mt-3 text-center"
 };
 var _hoisted_18 = {
   "class": "cart-item d-flex w-100",
@@ -19878,7 +19960,7 @@ var _hoisted_19 = {
     "font-weight": "700",
     "margin": "0 20px"
   },
-  id: "totalPrioce"
+  id: "totalPrice"
 };
 var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Итого: ");
 var _hoisted_21 = {
@@ -19886,23 +19968,45 @@ var _hoisted_21 = {
     "color": "green"
   }
 };
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  style: {
-    "font-size": "18px",
-    "font-weight": "700",
-    "margin": "0 20px"
-  },
-  id: "totalCount"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Количество: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  style: {
-    "color": "green"
-  }
-}, "0")], -1 /* HOISTED */);
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"cart-form\"><form><div class=\"cart-form-col\"><div class=\"mb-3\"><label for=\"inputName\" class=\"form-label\">Ваше имя</label><input type=\"text\" class=\"form-control\" id=\"inputName\"></div><div class=\"mb-3\"><label for=\"inputPhone\" class=\"form-label\">Телефон</label><input type=\"text\" class=\"form-control\" id=\"inputPhone\" value=\"+ 7 (949)\"></div></div><div class=\"cart-form-col\"><div class=\"mb-3\"><label for=\"inputPhone\" class=\"form-label\">Комментарий к заказку</label><textarea class=\"form-control\"></textarea></div><div class=\"mb-3\"><div class=\"form-check\"><input class=\"form-check-input\" type=\"radio\" name=\"flexRadioDefault\" id=\"flexRadioDefault1\"><label class=\"form-check-label\" for=\"flexRadioDefault1\"> Доставка </label></div><div class=\"form-check\"><input class=\"form-check-input\" type=\"radio\" name=\"flexRadioDefault\" id=\"flexRadioDefault2\" checked><label class=\"form-check-label\" for=\"flexRadioDefault2\"> Самовывоз </label></div></div></div></form><button type=\"button\" class=\"btn btn-primary\">Подтвердить заказ</button></div>", 1);
+var _hoisted_22 = {
+  "class": "cart-form"
+};
+var _hoisted_23 = {
+  "class": "mycart"
+};
+var _hoisted_24 = {
+  "class": "cart-form-col"
+};
+var _hoisted_25 = {
+  "class": "mb-3"
+};
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "inputName",
+  "class": "form-label"
+}, "Ваше имя", -1 /* HOISTED */);
+var _hoisted_27 = {
+  "class": "mb-3"
+};
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "inputPhone",
+  "class": "form-label"
+}, "Телефон", -1 /* HOISTED */);
+var _hoisted_29 = {
+  "class": "cart-form-col"
+};
+var _hoisted_30 = {
+  "class": "mb-3"
+};
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "inputPhone",
+  required: "",
+  "class": "form-label"
+}, "Комментарий к заказку", -1 /* HOISTED */);
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"mb-3\"><div class=\"form-check\"><input class=\"form-check-input\" type=\"radio\" name=\"flexRadioDefault\" id=\"radio-dostavka\"><label class=\"form-check-label\" for=\"flexRadioDefault1\"> Доставка </label></div><div class=\"form-check\"><input class=\"form-check-input\" type=\"radio\" name=\"flexRadioDefault\" id=\"radio-vivoz\" checked><label class=\"form-check-label\" for=\"flexRadioDefault2\"> Самовывоз </label></div></div>", 1);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [this.products !== null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [this.items !== undefined && this.items !== null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.products, function (item) {
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.items, function (item) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "cart-item",
       id: item.id
@@ -19912,18 +20016,51 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 8 /* PROPS */, _hoisted_7)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'http://127.0.0.1:8000/product/' + item.id + '-' + item.name.split(' ').join('-')
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 9 /* TEXT, PROPS */, _hoisted_9)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      onInput: _cache[0] || (_cache[0] = function ($event) {
+        return $options.changeCount($event.target);
+      }),
       type: "number",
-      id: "itemCount",
+      "data-id": item.id,
       "class": "form-control",
       min: "1",
       value: "1",
       max: item.count
-    }, null, 8 /* PROPS */, _hoisted_11)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.price), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-      href: "",
-      "class": "del-product-link",
-      "data-id": item.id
-    }, _hoisted_16, 8 /* PROPS */, _hoisted_14)])], 8 /* PROPS */, _hoisted_4);
-  }), 256 /* UNKEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.desc), 1 /* TEXT */)])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.totalprice) + " ₽", 1 /* TEXT */)]), _hoisted_22])]), _hoisted_23]);
+    }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_11)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.price), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+      onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+        return $options.delFromCart($event.target);
+      }, ["prevent"])),
+      "data-id": item.id,
+      "class": "fa fa-minus",
+      "aria-hidden": "true"
+    }, null, 8 /* PROPS */, _hoisted_15)])])], 8 /* PROPS */, _hoisted_4);
+  }), 256 /* UNKEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.desc), 1 /* TEXT */)])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.totalprice) + " ₽", 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.name = $event;
+    }),
+    "class": "form-control",
+    id: "inputName"
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [_hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "tel",
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $data.phone = $event;
+    }),
+    "class": "form-control",
+    id: "inputPhone",
+    placeholder: "+7 (949)"
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.phone]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    "class": "form-control",
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $data.comments = $event;
+    }),
+    id: "comments"
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.comments]])]), _hoisted_32])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[5] || (_cache[5] = function () {
+      return $options.sendOrder && $options.sendOrder.apply($options, arguments);
+    }),
+    type: "button",
+    "class": "btn btn-primary"
+  }, "Подтвердить заказ")])])]);
 }
 
 /***/ }),
@@ -20277,22 +20414,20 @@ var _hoisted_29 = {
   "class": "catalog-product-name"
 };
 var _hoisted_30 = ["href"];
-var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_31 = {
   "class": "add-product"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  "class": "add-product-link"
-}, "В корзину ")], -1 /* HOISTED */);
-var _hoisted_32 = {
+};
+var _hoisted_32 = ["data-id"];
+var _hoisted_33 = {
   "aria-label": "Page navigation example"
 };
-var _hoisted_33 = {
+var _hoisted_34 = {
   "class": "pagination"
 };
-var _hoisted_34 = {
+var _hoisted_35 = {
   "class": "page-item"
 };
-var _hoisted_35 = ["href"];
+var _hoisted_36 = ["href"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
   var _component_Slider = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Slider");
@@ -20338,12 +20473,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       alt: ""
     }, null, 8 /* PROPS */, _hoisted_27)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.price) + "₽", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'http://127.0.0.1:8000/product/' + item.id + '-' + item.name.split(' ').join('-')
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 9 /* TEXT, PROPS */, _hoisted_30)]), _hoisted_31]);
-  }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_33, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.data.links, function (link) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 9 /* TEXT, PROPS */, _hoisted_30)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      onClick: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+        return $options.toCartClick($event.target);
+      }, ["prevent"])),
+      href: "",
+      "data-id": item.id,
+      "class": "add-product-link"
+    }, "В корзину ", 8 /* PROPS */, _hoisted_32)])]);
+  }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_34, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.data.links, function (link) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       "class": "page-link",
       href: link.url
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(link.label), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_35)]);
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(link.label), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_36)]);
   }), 256 /* UNKEYED_FRAGMENT */))])])])])]);
 }
 

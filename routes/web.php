@@ -31,8 +31,11 @@ Route::get('/product/{name}', [ProductPageController::class, 'load'])->name("/pr
 Route::get('/products/{category}', [ProductsPageController::class, 'load'])->name("products");
 Route::get('/products/{category}/sort', [ProductsPageController::class, 'sort'])->name("products-sort");
 Route::get('/cart', [CartController::class, 'load'])->name("cart");
-Route::get('/addtocart', [CartController::class, 'addToCart'])->name("cart");
-
+Route::get('/addtocart', [CartController::class, 'addToCart'])->name("addtocart");
+Route::get('/delfromcart', [CartController::class, 'removeFromCart'])->name("delfromcart");
+Route::get('/getcartdata', [CartController::class, 'getData'])->name("getcartdata");
+Route::post('/addorder', [CartController::class, 'addOrder'])->name("addOrder");
+Route::get('/cartcount', [CartController::class, 'cartCount'])->name("cartcount");
 
 Route::group(['middleware' => ['guest']], function() {
     /**

@@ -25,9 +25,9 @@ export default {
         this.data['links'][0]['label'] = '<'
         this.data['links'][Object.keys(this.data['links']).length - 1]['label'] = '>'
         // --
-       
 
-        
+
+
 
     },
     methods: {
@@ -41,16 +41,40 @@ export default {
 
             var list = document.getElementsByClassName('form-check-input');
             var brands = new Array()
-          
+
             Array.from(list).forEach(function (el) {
                 if (el.checked) brands.push(el.id)
             });
 
 
 
-            window.location.href = "http://127.0.0.1:8000/products/" + this.category + "/sort/?order_id=" + this.order_id + "&min_price=" + this.value[0] + "&max_price=" + this.value[1]  + "&brands=" + brands
+            window.location.href = "http://127.0.0.1:8000/products/" + this.category + "/sort/?order_id=" + this.order_id + "&min_price=" + this.value[0] + "&max_price=" + this.value[1] + "&brands=" + brands
 
-        }
+        },
+        toCartClick: function (e) {
+
+            let id = e.getAttribute('data-id')
+            axios
+                .get('http://127.0.0.1:8000/addtocart', {
+                    params: {
+                        id: id
+                    }
+                })
+                .then(response => {
+                    console.log(response)
+                    if (response.data == false) alert('Товар уже есть в корзине')
+                    else {
+                        var qty = document.getElementsByClassName('cart-qty-p')[0]
+                        qty.textContent = response.data
+                    }
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+
+        },
+
 
     }
 }
@@ -84,7 +108,8 @@ export default {
                     <h4>Бренды</h4>
                     <div class="filter">
                         <div v-for="item in this.brands" class="form-check">
-                            <input v-if="this.checked_brands.includes(item[0].id)"   class="form-check-input" type="checkbox" value="" v-bind:id="item[0].id" checked>
+                            <input v-if="this.checked_brands.includes(item[0].id)" class="form-check-input" type="checkbox"
+                                value="" v-bind:id="item[0].id" checked>
                             <input v-else class="form-check-input" type="checkbox" value="" v-bind:id="item[0].id">
 
                             <label class="form-check-label" for="flexCheckDefault">
@@ -121,7 +146,8 @@ export default {
                                 }}</a>
                         </div>
                         <div class="add-product">
-                            <a href="#" class="add-product-link">В корзину
+                            <a @click.prevent="toCartClick($event.target)" href="" v-bind:data-id="item.id"
+                                class="add-product-link">В корзину
                             </a>
                         </div>
                     </div>

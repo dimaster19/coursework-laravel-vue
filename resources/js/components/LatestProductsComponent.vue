@@ -45,29 +45,7 @@ export default {
 
         },
 
-        delFromCartClick: function (e) {
-
-            let id = e.getAttribute('data-id')
-            axios
-                .get('http://127.0.0.1:8000/addtocart', {
-                    params: {
-                        id: id
-                    }
-                })
-                .then(response => {
-                    if (response.data == 0) alert('Товар уже есть в корзине')
-                    else {
-                        var qty = document.getElementsByClassName('cart-qty-p')[0]
-                        qty.textContent = response.data
-                    }
-
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-
-        }
+       
     },
 };
 </script>

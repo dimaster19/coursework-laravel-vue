@@ -825,7 +825,7 @@ header {
     margin-bottom: 20px;
 }
 
-.cart-form form {
+.cart-form .mycart{
     display: flex;
     flex-direction: row;
 }
@@ -1136,7 +1136,9 @@ html .ui-button.ui-state-disabled:active {
     box-shadow: none;
 }
 
-
+.del-product-link:hover {
+    cursor: pointer;
+}
 .del-product
 {
     position: absolute;
