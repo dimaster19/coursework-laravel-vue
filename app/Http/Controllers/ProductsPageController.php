@@ -17,7 +17,7 @@ class ProductsPageController extends Controller
             case 'smartfony':
                 $title = 'Смартфоны';
                 break;
-            case 'naushniko':
+            case 'naushniki':
                 $title = 'Наушники';
                 break;
         }

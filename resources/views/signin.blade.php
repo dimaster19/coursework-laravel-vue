@@ -13,7 +13,7 @@
             </div>
             <div class="col-12 d-flex" style="align-items: center;">
                 <button class="btn btn-primary" type="submit">Войти</button>
-                <a class="mx-2" href="/signup">Нет аккаунта?</a>
+                <a class="mx-2" href="/register">Нет аккаунта?</a>
             </div>
         </form>
         <div style="color: red;">

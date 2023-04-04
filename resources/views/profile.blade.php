@@ -22,7 +22,7 @@
             </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <div class="tab-panel fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <form action=""  class="row g-3 needs-validation" validate>
                     <div class="col-md-6">
                         <input disabled type="email" name="email" aria-label="E-mail" placeholder="{{auth()->user()->email}}" required="" class="form-control">
@@ -35,8 +35,8 @@
                     </div>
                 </form>
             </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+            <div class="tab-panel fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
+            <div class="tab-panel fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
         </div>
     </div>
 

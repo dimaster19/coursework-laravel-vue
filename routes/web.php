@@ -9,6 +9,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductsPageController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\AdminPanelController;
 
 
 /*
@@ -66,4 +67,8 @@ Route::group(['middleware' => ['auth']], function() {
      */
     Route::get('/profile', [ProfileController::class, 'load'])->name('profile.show');
     Route::post('/profile',  [LoginController::class, 'login1'])->name('login.perform1');
+    Route::get('/adminpanel',  [AdminPanelController::class, 'load'])->name('admin-panel');
+    Route::get('/getdbdata',  [AdminPanelController::class, 'getColumns'])->name('getdbdata');
+    Route::get('/getdb',  [AdminPanelController::class, 'getData'])->name('getdb');
+
 });

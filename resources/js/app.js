@@ -8,6 +8,7 @@ import Product from './components/Product.vue'
 import Register from './components/Register.vue'
 import Products from './components/Products.vue'
 import Cart from './components/Cart.vue'
+import Admin from './components/AdminPanel.vue'
 
 
 
@@ -18,6 +19,7 @@ app.component('product', Product)
 app.component('register', Register)
 app.component('products', Products)
 app.component('cart', Cart)
+app.component('admin-panel', Admin)
 
 app.mount('#app');
 
