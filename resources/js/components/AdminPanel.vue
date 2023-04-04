@@ -22,10 +22,7 @@ export default {
                     this.tab_data['links'][Object.keys(this.tab_data['links']).length - 1]['label'] = '>'
                     this.tab_name = 'products'
                     this.tab_columns = response.data[1]
-                    console.log(response.data[1])
-                    console.log('------------------')
-
-                    console.log(response.data[2])
+                    
 
                 })
                 .catch(error => {
@@ -67,7 +64,6 @@ export default {
                     this.tab_data['links'][Object.keys(this.tab_data['links']).length - 1]['label'] = '>'
                     this.tab_name = e.getAttribute('data-id')
                     this.tab_columns = response.data[1]
-                    console.log (response.data[1])
                 })
                 .catch(error => {
                     console.log(error);

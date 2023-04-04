@@ -97,9 +97,10 @@
                                 Категории
                             </button>
                             <ul data-target="one" class="mydropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="mydropdown-item" href="#">Action</a></li>
-                                <li><a class="mydropdown-item" href="#">Another action</a></li>
-                                <li><a class="mydropdown-item" href="#">Something else here</a></li>
+                                @foreach (session('categories') as $category)
+                                <li><a class="mydropdown-item" href="http://127.0.0.1:8000/products/{{ $category['name']  }}">{{ $category['name'] }}</a></li>
+                                @endforeach
+
                             </ul>
                         </div>
                     </div>

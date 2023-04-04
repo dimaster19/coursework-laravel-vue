@@ -23,30 +23,23 @@
 <div class="content">
 
     <div class="main-categories">
+        @foreach (session('categories') as $category)
+
+
         <div class="category">
-            <a href="products/smartfony" class="link-categories">
+            <a href="http://127.0.0.1:8000/products/{{ $category['name']  }}" class="link-categories">
                 <div class="block-categories">
                     <div class="categories-img">
                         <img src="imgs/category1.jpg" alt="">
                     </div>
                     <div class="categories-name">
-                        Смартфоны
+                    {{ $category['name'] }}
                     </div>
                 </div>
             </a>
         </div>
-        <div class="category">
-            <a href="products/smartfony" class="link-categories">
-                <div class="block-categories">
-                    <div class="categories-img">
-                        <img src="imgs/category1.jpg" alt="">
-                    </div>
-                    <div class="categories-name">
-                        Смартфоны
-                    </div>
-                </div>
-            </a>
-        </div>
+        @endforeach
+
 
     </div>
 

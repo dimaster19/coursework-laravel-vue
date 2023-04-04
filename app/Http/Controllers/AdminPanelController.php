@@ -29,10 +29,9 @@ class AdminPanelController extends Controller
     public function getColumns(Request $request)
     {
         // $query =  DB::select('SELECT column_name  FROM information_schema.columns  WHERE  table_name = ?', [$request->id]);
-        $query=  Schema::getColumnListing($request->dbname);
+        $query =  Schema::getColumnListing($request->id);
 
-        Log::debug($query);
-        Log::debug($request->id);
+
 
         return $query;
     }
