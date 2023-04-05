@@ -14,7 +14,7 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        $query = Category::all('name');
+        $query = Category::all('name', 'rus_name');
         session(['categories' => $query]);
 
     }

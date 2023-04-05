@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -64,25 +66,29 @@ export default {
             }
             // -------------
 
-            if (this.items != null || this.items != undefined) {
-                if (this.name != '' || this.phone != '') {
+            if (this.items != null && this.items != undefined) {
+                if (this.name != '' && this.phone != '') {
 
-                 console.log (this.delivery)
+                    console.log(this.delivery)
                     axios.post('http://127.0.0.1:8000/addorder', {
-                 
+
                         name: this.name,
                         phone: this.phone,
                         delivery: this.delivery,
 
-                })
-                .then(response => {
-                    alert('Заказ оформлен')
+                    })
+                        .then(response => {
+                            alert('Заказ оформлен')
+                            this.items = null
+                            axios.post('http://127.0.0.1:8000/clearcart').then(response => {
+                                var qty = document.getElementsByClassName('cart-qty-p')[0]
+                                qty.textContent = '0'
+                            });
 
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
                 }
                 else alert('Заполните все поля формы')
             }
@@ -91,22 +97,22 @@ export default {
             }
         },
 
-        changeCount: function(e){
+        changeCount: function (e) {
             if (Number(e.value) > Number(e.max)) e.value = e.max
             else if (Number(e.value) < Number(e.min)) e.value = e.min
 
-            
+
             axios
                 .get('http://127.0.0.1:8000/cartcount', {
                     params: {
-                        id:  e.getAttribute('data-id'),
+                        id: e.getAttribute('data-id'),
                         count: e.value
 
                     }
                 })
                 .then(response => {
 
-                    console.log ('Значение товара изменено')
+                    console.log('Значение товара изменено')
 
 
                 })
@@ -134,8 +140,8 @@ export default {
                             item.name }}</a>
                     </div>
                 </div>
-                <div class="cart-count item-to-cart"><input v-on:input="changeCount($event.target)" type="number" v-bind:data-id="item.id" class="form-control" min="1"
-                        value="1" :max="item.count"></div>
+                <div class="cart-count item-to-cart"><input v-on:input="changeCount($event.target)" type="number"
+                        v-bind:data-id="item.id" class="form-control" min="1" value="1" :max="item.count"></div>
                 <div class="cart-total">
                     <p>{{ item.price }}</p>
                 </div>

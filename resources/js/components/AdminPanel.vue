@@ -1,36 +1,22 @@
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
             data_id: null,
             modal_data: null,
             tab_data: null,
+            tab_links: null,
             tab_name: null,
-            tab_columns: null
+            tab_columns: null,
+            update_id: null,
+            update_data: null,
+            input_data: null,
+            input_header: null
         };
     },
-    created() {
-        axios
-                .get('http://127.0.0.1:8000/getdb', {
-                    params: {
-                        dbname: 'products'
-                    }
-                })
-                .then(response => {
-                    this.tab_data = response.data[0]
-                    this.tab_data['links'][0]['label'] = '<'
-                    this.tab_data['links'][Object.keys(this.tab_data['links']).length - 1]['label'] = '>'
-                    this.tab_name = 'products'
-                    this.tab_columns = response.data[1]
-                    
 
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-    }
-    
-        ,
     methods: {
         modalClick: function (e) {
             this.data_id = e.id;
@@ -42,7 +28,6 @@ export default {
                         }
                     })
                     .then(response => {
-                        console.log(response.data)
                         this.modal_data = response.data
                     })
                     .catch(error => {
@@ -51,25 +36,126 @@ export default {
             }
 
         },
-        tabClick: function (e) {
+        updateIdClick: function () {
             axios
-                .get('http://127.0.0.1:8000/getdb', {
+                .get('http://127.0.0.1:8000/updatedata', {
                     params: {
-                        dbname: e.getAttribute('data-id')
+                        id: this.update_id,
+                        db: this.data_id
                     }
                 })
                 .then(response => {
-                    this.tab_data = response.data[0]
-                    this.tab_data['links'][0]['label'] = '<'
-                    this.tab_data['links'][Object.keys(this.tab_data['links']).length - 1]['label'] = '>'
-                    this.tab_name = e.getAttribute('data-id')
-                    this.tab_columns = response.data[1]
+                    this.update_data = response.data
+                    let temp = this.update_data
+                    let list = document.getElementsByClassName('db-update')
+                    Array.from(list).forEach(function (el) {
+                        el.value = temp[el.id] // в el.id содержится название атрибута
+                    });
                 })
                 .catch(error => {
                     console.log(error);
                 })
-
         },
+        actionClick: function (e) {
+
+
+
+            if (e.id == 'create') {
+                let temp = new Array
+                let temp2 = new Array
+                let list = document.getElementsByClassName('db-create')
+                let i = 0;
+                let flag = false; // true если есть пустые значения
+                Array.from(list).forEach(function (el) {
+                    if (el.value == '') flag = true
+                    temp[i] = el.value;
+                    temp2[i] = el.id
+                    i++
+                });
+
+                this.input_data = temp
+                this.input_header = temp2
+                if (flag == false) {
+                    axios.post('http://127.0.0.1:8000/adminaction', {
+
+                        action: e.id,
+                        input_data: this.input_data,
+                        input_header: this.input_header,
+                        db: this.data_id
+
+
+                    })
+                        .then(response => {
+                            alert('Успешно')
+
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                }
+                else alert('Заполните все поля')
+
+            }
+            else if (e.id == 'update') {
+                let temp = new Array
+                let temp2 = new Array
+                let list = document.getElementsByClassName('db-update')
+                let i = 0;
+                let flag = false; // true если есть пустые значения
+                Array.from(list).forEach(function (el) {
+                    if (el.value == '') flag = true
+                    temp[i] = el.value;
+                    temp2[i] = el.id
+                    i++
+                });
+
+                this.input_data = temp
+                this.input_header = temp2
+                if (flag == false) {
+                    axios.post('http://127.0.0.1:8000/adminaction', {
+
+                        action: e.id,
+                        input_data: this.input_data,
+                        input_header: this.input_header,
+                        db: this.data_id,
+                        update_id: this.update_id
+
+                    })
+                        .then(response => {
+                            alert('Успешно')
+
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                }
+                else alert('Заполните все поля')
+
+            }
+            else if (e.id == 'remove') {
+               
+                let id = document.getElementsByClassName('db-remove')[0].value
+               
+                if (id != '') {
+                    axios.post('http://127.0.0.1:8000/adminaction', {
+
+                        action: e.id,
+                        db: this.data_id,
+                        remove_id: id
+
+                    })
+                        .then(response => {
+                            alert('Успешно')
+
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                }
+                else alert('Заполните все поля')
+            }
+        }
+
 
     }
 }
@@ -77,7 +163,26 @@ export default {
 
 <template>
     <div class="content mt-5 mb-5 radius-content py-3 px-3" style="min-height: 300px">
-
+        <div class="mb-3 d-flex justify-content-center">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminpanel/products">Товары</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminpanel/categories">Категории</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminpanel/manufactures">Производители</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminpanel/orders">Заказы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminpanel/users">Пользователи</a>
+                </li>
+            </ul>
+        </div>
+        <hr>
         <div class="catalog-products-grid" style="grid-auto-rows: 240px!important; ">
             <div class="catalog-product-item d-flex" style="background-color:#ffa218; justify-content:center;">
                 <button v-on:click="modalClick($event.target)" id="products" data-bs-toggle="modal"
@@ -121,118 +226,85 @@ export default {
                     </div>
                     <div class="modal-body">
 
-                        <div class="item-bottom mt-3">
+                        <div v-if="this.data_id != 'slider'" class="item-bottom mt-3">
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                    <button class="nav-link active" id="pills-add-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-add" type="button" role="tab" aria-controls="pills-add"
                                         aria-selected="true">Добавить</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-profile" type="button" role="tab"
-                                        aria-controls="pills-profile" aria-selected="false">Изменить</button>
+                                    <button class="nav-link" id="pills-update-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-update" type="button" role="tab" aria-controls="pills-update"
+                                        aria-selected="false">Изменить</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-contact" type="button" role="tab"
-                                        aria-controls="pills-contact" aria-selected="false">Удалить</button>
+                                    <button class="nav-link" id="pills-remove-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-remove" type="button" role="tab" aria-controls="pills-remove"
+                                        aria-selected="false">Удалить</button>
                                 </li>
                             </ul>
 
                             <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-panel fade show active" id="pills-home" role="tabpanel"
-                                    aria-labelledby="pills-home-tab">
+                                <div class="tab-pane fade show active" id="pills-add" role="tabpanel"
+                                    aria-labelledby="pills-add-tab">
                                     <form>
 
                                         <div v-for="data in this.modal_data" class="mb-3">
                                             <div
                                                 v-if="data !== 'email_verified_at' && data !== 'id' && data !== 'created_at' && data !== 'updated_at' && data !== 'remember_token'">
                                                 <label class="form-label">{{ data }}</label>
-                                                <input type="text" class="form-control db-input" :id="data">
+                                                <input type="text" class="form-control db-create" :id="data">
                                             </div>
                                         </div>
+                                        <button type="button" v-on:click="actionClick($event.target)" id="create"
+                                            class="btn btn-primary mt-3">Отправить</button>
 
                                     </form>
                                 </div>
-                                <div class="tab-panel fade" id="pills-profile" role="tabpanel"
-                                    aria-labelledby="pills-profile-tab">...</div>
-                                <div class="tab-panel fade" id="pills-contact" role="tabpanel"
-                                    aria-labelledby="pills-contact-tab">...</div>
+                                <div class="tab-pane fade" id="pills-update" role="tabpanel"
+                                    aria-labelledby="pills-update-tab">
+                                    <form action="">
+                                        <div class="mb-3">
+                                            <label class="form-label">Введите ID</label>
+                                            <input type="text" class="form-control" v-model="update_id">
+                                            <button type="button" v-on:click="updateIdClick"
+                                                class="btn btn-primary mt-3">Получить</button>
+                                        </div>
+                                    </form>
+                                    <form>
+
+                                        <div v-for="data in this.modal_data" class="mb-3">
+                                            <div
+                                                v-if="data !== 'email_verified_at' && data !== 'id' && data !== 'created_at' && data !== 'updated_at' && data !== 'remember_token'">
+                                                <label class="form-label">{{ data }}</label>
+                                                <input type="text" class="form-control db-update" :id="data">
+                                            </div>
+                                        </div>
+                                        <button type="button" v-on:click="actionClick($event.target)" id="update"
+                                            class="btn btn-primary mt-3">Отправить</button>
+
+                                    </form>
+
+                                </div>
+                                <div class="tab-pane fade" id="pills-remove" role="tabpanel"
+                                    aria-labelledby="pills-remove-tab">
+                                    <label class="form-label">Удаляемый ID</label>
+                                   <input type="text" class="form-control db-remove" >
+                                   <button type="button" v-on:click="actionClick($event.target)" id="remove"
+                                            class="btn btn-primary mt-3">Отправить</button>
+
+                                </div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Отправить</button>
-                    </div>
+
                 </div>
             </div>
         </div>
 
-        <!-- Вывод таблиц -->
-        <div class="item-bottom mt-3">
-            <ul class="nav nav-pills mb-3" style="border: 1px solid #ffa218; border-radius: 8px;" id="pills-tab"
-                role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button v-on:click="tabClick($event.target)" class="nav-link active" data-id="products" data-bs-toggle="pill"
-                        data-bs-target="#2pills-products" type="button" role="tab" aria-controls="2pills-products"
-                        aria-selected="true">Товары</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button v-on:click="tabClick($event.target)" class="nav-link" data-id="categories" data-bs-toggle="pill"
-                        data-bs-target="#2pills-categories" type="button" role="tab" aria-controls="2pills-categories"
-                        aria-selected="false">Категории</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button v-on:click="tabClick($event.target)" class="nav-link" data-id="orders" data-bs-toggle="pill"
-                        data-bs-target="#2pills-orders" type="button" role="tab" aria-controls="2pills-orders"
-                        aria-selected="false">Заказы</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button v-on:click="tabClick($event.target)" class="nav-link" data-id="manufactures"
-                        data-bs-toggle="pill" data-bs-target="#2pills-manufactures" type="button" role="tab"
-                        aria-controls="2pills-manufactures" aria-selected="false">Производители</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button v-on:click="tabClick($event.target)" class="nav-link" data-id="users" data-bs-toggle="pill"
-                        data-bs-target="#2pills-users" type="button" role="tab" aria-controls="2pills-users"
-                        aria-selected="false">Пользователи</button>
-                </li>
 
-            </ul>
 
-            <div class="tab-content" id="pills-tabContent">
-                <div class="tab-panel"
-                    :id="'2pills-' + this.tab_name" role="tabpanel" :aria-labelledby="'2pills-' + this.tab_name + '-tab'">
-                {{ this.tab_name }}
-                    <table class="table table-striped">
-                        <thead>
-                            <tr >
-                                <th v-for="data in this.tab_columns" scope="col" ><div v-if="data !== 'email_verified_at' && data !== 'id'  && data !== 'remember_token'">{{data }}</div></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="data in this.tab_data.data">
-                                <td v-for="test in data" >{{ test }}</td>
-
-                            </tr>
-                           
-                        </tbody>
-                    </table>
-                    <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item" v-for="link in this.tab_data.links"><a class="page-link" v-bind:href="link.url">
-
-                                <div> {{ link.label }}</div>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                </div>
-             
-            </div>
-
-        </div>
     </div>
 </template>

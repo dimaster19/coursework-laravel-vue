@@ -35,6 +35,7 @@ Route::get('/cart', [CartController::class, 'load'])->name("cart");
 Route::get('/addtocart', [CartController::class, 'addToCart'])->name("addtocart");
 Route::get('/delfromcart', [CartController::class, 'removeFromCart'])->name("delfromcart");
 Route::get('/getcartdata', [CartController::class, 'getData'])->name("getcartdata");
+Route::post('/clearcart', [CartController::class, 'clearCart'])->name("clearcart");
 Route::post('/addorder', [CartController::class, 'addOrder'])->name("addOrder");
 Route::get('/cartcount', [CartController::class, 'cartCount'])->name("cartcount");
 
@@ -69,6 +70,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/profile',  [LoginController::class, 'login1'])->name('login.perform1');
     Route::get('/adminpanel',  [AdminPanelController::class, 'load'])->name('admin-panel');
     Route::get('/getdbdata',  [AdminPanelController::class, 'getColumns'])->name('getdbdata');
-    Route::get('/getdb',  [AdminPanelController::class, 'getData'])->name('getdb');
+    Route::get('/adminpanel/{db}',  [AdminPanelController::class, 'getData'])->name('getdb');
+    Route::get('/updatedata',  [AdminPanelController::class, 'getUpdateData'])->name('getUpdateData');
+    Route::post('/adminaction',  [AdminPanelController::class, 'adminAction'])->name('adminaction');
 
 });

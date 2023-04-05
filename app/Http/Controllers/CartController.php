@@ -15,46 +15,42 @@ class CartController extends Controller
         $title = 'Корзина';
 
 
-
-        return view('cart',compact('title'));
-
-
+        return view('cart', compact('title'));
     }
 
-    public function getData(Request $request) {
+    public function getData(Request $request)
+    {
         $products = array();
         $totalprice = 0;
-        if (session('carts') != 0)
-        {
+        if (session('carts') != 0) {
             $arr = session('carts');
             foreach ($arr as &$value) {
                 $product = Product::find($value[0]);
                 $products[] =  $product;
-                $totalprice +=  $product -> price;
-             }
-             return [$products, $totalprice];
-
+                $totalprice +=  $product->price;
+            }
+            return [$products, $totalprice];
         }
     }
 
 
     public function addToCart(Request $request)
     {
-        if (session('carts') != 0)
-        {
-        $arr = session('carts');
-        foreach ($arr as &$value) {
-            if ($value[0] == $request->id) return false;
-         }
+        if (session('carts') != 0) {
+            $arr = session('carts');
+            foreach ($arr as &$value) {
+                if ($value[0] == $request->id) return false;
+            }
         }
 
-        session()->push('carts',  [$request -> id, 1]);
+        session()->push('carts',  [$request->id, 1]);
         session(['cart_count' => count(session('carts'))]);
 
         return session('cart_count');
     }
 
-    public function removeFromCart(Request $request) {
+    public function removeFromCart(Request $request)
+    {
         $arr = session('carts');
         if (count($arr) > 1) {
             foreach ($arr as &$value) {
@@ -62,42 +58,38 @@ class CartController extends Controller
                     $key = array_search($value, $arr, true);
                     unset($arr[$key]);
                 }
+            }
+            session(['carts' => $arr]);
 
-             }
-             session(['carts' => $arr]);
-
-             session(['cart_count' => count(session('carts'))]);
+            session(['cart_count' => count(session('carts'))]);
 
 
-             $totalprice = 0;
+            $totalprice = 0;
 
-             foreach (session('carts') as &$value) {
-                 $product = Product::find($value[0]);
-                 $products[] =  $product;
-                 $totalprice +=  $product -> price;
-
-              }
-
-        }
-        else {
+            foreach (session('carts') as &$value) {
+                $product = Product::find($value[0]);
+                $products[] =  $product;
+                $totalprice +=  $product->price;
+            }
+        } else {
             session(['cart_count' => 0]);
 
             session()->forget('carts');
             $products[] = null;
             $totalprice = 0;
         }
-         return [$products, $totalprice];
-
+        return [$products, $totalprice];
     }
 
-    public function addOrder(Request $request) {
+    public function addOrder(Request $request)
+    {
         $name = $request->name;
         $phone = $request->phone;
         $delivery = $request->delivery;
 
 
         if (Auth::check()) {
-            foreach (session('carts') as &$value){
+            foreach (session('carts') as &$value) {
                 Order::create([
                     'status' => 'not completed',
                     'count' => $value[1],
@@ -109,11 +101,14 @@ class CartController extends Controller
                     'phone' => $phone,
 
                 ]);
-            }
+                $product = Product::find($value[0]);
 
-        }
-        else {
-            foreach (session('carts') as &$value){
+                $product->count = $product->count - (int)$value[1];
+
+                $product->save();
+            }
+        } else {
+            foreach (session('carts') as &$value) {
                 Order::create([
                     'status' => 'not completed',
                     'count' => $value[1],
@@ -124,6 +119,11 @@ class CartController extends Controller
                     'phone' => $phone,
 
                 ]);
+                $product = Product::find($value[0]);
+
+                $product->count = $product->count - (int)$value[1];
+
+                $product->save();
             }
         }
 
@@ -131,20 +131,25 @@ class CartController extends Controller
         return true;
     }
 
-    public function cartCount(Request $request) {
-            $arr = session('carts');
-            foreach ($arr as &$value) {
-                if ($value[0] == intval($request->id)) {
-                    $key = array_search($value, $arr, true);
+    public function cartCount(Request $request)
+    {
+        $arr = session('carts');
+        foreach ($arr as &$value) {
+            if ($value[0] == intval($request->id)) {
+                $key = array_search($value, $arr, true);
 
 
-                    $arr[$key][1] = intval($request->count);
-
-                }
-
-             }
-             session(['carts' => $arr]);
-             return $arr;
+                $arr[$key][1] = intval($request->count);
+            }
+        }
+        session(['carts' => $arr]);
+        return $arr;
     }
 
+    public function clearCart(Request $request)
+    {
+        session(['carts' => 0]);
+        session(['cart_count' => 0]);
+
+    }
 }

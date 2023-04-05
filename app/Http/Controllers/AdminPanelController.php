@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Manufacture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -14,14 +15,13 @@ class AdminPanelController extends Controller
     public function load(Request $request)
     {
 
-        if (auth()->user()->role == 'tue') {
-            $title = 'Интернет-магазин техники и электроники в Донецке (ДНР), купить в DNS';
+        if (auth()->user()->role == 'true') {
+            $title = 'Админ панель';
 
             return view('adminpanel', compact('title'));
         } else {
-            $title = 'Интернет-магазин техники и электроники в Донецке (ДНР), купить в DNS';
 
-            return view('adminpanel', compact('title'));
+            return redirect('/');
         }
     }
 
@@ -36,13 +36,50 @@ class AdminPanelController extends Controller
         return $query;
     }
 
-    public function getData(Request $request)
+    public function getData(Request $request, $db)
+    {
+
+        $title = ucfirst($db);
+
+        $query =   DB::table($db)->orderBy('id')->paginate(30);
+
+        $columns =  Schema::getColumnListing($db);
+
+        return view('viewdb', compact('query',  'columns', 'title'));
+
+    }
+
+    public function getUpdateData(Request $request)
+    {
+
+        $query =  DB::table( $request->db)->find($request->id);
+
+        return $query;
+
+    }
+
+    public function adminAction(Request $request)
     {
 
 
-        $query =  DB::table($request->dbname)->orderBy('id', 'desc')->paginate(20);
-        $columns =  Schema::getColumnListing($request->dbname);
+        if($request->action == 'create') {
+            DB::table($request->db)->insert([
+                array_combine($request->input_header, $request->input_data)
+            ]);
+        }
+        else if ($request->action == 'update') {
+             DB::table($request->db)
+            ->where('id', $request->update_id)
+            ->update(array_combine($request->input_header, $request->input_data)
+        );
+        }
+        else if ($request->action == 'remove') {
+            DB::table($request->db)->where('id', $request->remove_id )->delete();
 
-        return [$query, $columns];
+        }
+
+
     }
+
+
 }

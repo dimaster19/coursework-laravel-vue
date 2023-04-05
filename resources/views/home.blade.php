@@ -33,7 +33,7 @@
                         <img src="imgs/category1.jpg" alt="">
                     </div>
                     <div class="categories-name">
-                    {{ $category['name'] }}
+                    {{ $category['rus_name'] }}
                     </div>
                 </div>
             </a>

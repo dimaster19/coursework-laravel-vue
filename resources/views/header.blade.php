@@ -98,7 +98,7 @@
                             </button>
                             <ul data-target="one" class="mydropdown-menu" aria-labelledby="dropdownMenuButton">
                                 @foreach (session('categories') as $category)
-                                <li><a class="mydropdown-item" href="http://127.0.0.1:8000/products/{{ $category['name']  }}">{{ $category['name'] }}</a></li>
+                                <li><a class="mydropdown-item" href="http://127.0.0.1:8000/products/{{ $category['name']  }}">{{ ucfirst($category['rus_name']) }}</a></li>
                                 @endforeach
 
                             </ul>
