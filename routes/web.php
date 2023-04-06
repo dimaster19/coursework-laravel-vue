@@ -73,5 +73,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/adminpanel/{db}',  [AdminPanelController::class, 'getData'])->name('getdb');
     Route::get('/updatedata',  [AdminPanelController::class, 'getUpdateData'])->name('getUpdateData');
     Route::post('/adminaction',  [AdminPanelController::class, 'adminAction'])->name('adminaction');
+    Route::post('/carousel',  [AdminPanelController::class, 'editCarousel'])->name('editCarousel');
 
 });

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Manufacture;
+use App\Models\Carousel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -81,5 +81,15 @@ class AdminPanelController extends Controller
 
     }
 
+    public function editCarousel(Request $request){
+        Log::debug($request);
+        $fileName = time() . '.' . $request->file->getClientOriginalName();
+        $request->file->move(public_path('imgs'), $fileName);
 
+        // файлы выше сохраняются в папку, теперь нужно добавить их в бд, а в карусель пихать последнии 3-5 записи
+
+        // Carousel::create([
+        //     'imgs' => 'London to Paris',
+        // ]);
+    }
 }
