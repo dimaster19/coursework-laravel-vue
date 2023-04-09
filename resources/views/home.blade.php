@@ -1,15 +1,13 @@
 @include('header')
+
+
 <div id="carouselExampleFade" class="carousel slide carousel-fade mb-4" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item active">
-            <a href="" class=""><img src="imgs/slide1.jpg" style="max-height: 550px;" class="d-block w-100" alt="..."></a>
-        </div>
+    @foreach ($carousel_imgs as $img)
         <div class="carousel-item">
-            <a href="" class=""><img src="imgs/slide2.jpg" style="max-height: 550px;" class="d-block w-100" alt="..."></a>
+            <a href="" class=""><img src="imgs/{{$img -> imgs}}" style="max-height: 550px;" class="d-block w-100" alt="..."></a>
         </div>
-        <div class="carousel-item">
-            <a href="" class=""><img src="imgs/slide3.jpg" style="max-height: 550px;" class="d-block w-100" alt="..."></a>
-        </div>
+    @endforeach
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

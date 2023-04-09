@@ -48,10 +48,6 @@
                                     </li>
                                     <li class="page-item">
                                         <a href="#">
-                                            Каталог </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#">
                                             Кабинет </a>
                                     </li>
                                     <li class="page-item">
@@ -78,10 +74,6 @@
                                         <a href="#">
                                             Блог
                                         </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#">
-                                            Каталог </a>
                                     </li>
                                     <li class="page-item">
                                         <a href="#">

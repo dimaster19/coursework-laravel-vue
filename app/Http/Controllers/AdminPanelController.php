@@ -86,10 +86,15 @@ class AdminPanelController extends Controller
         $fileName = time() . '.' . $request->file->getClientOriginalName();
         $request->file->move(public_path('imgs'), $fileName);
 
-        // файлы выше сохраняются в папку, теперь нужно добавить их в бд, а в карусель пихать последнии 3-5 записи
-
-        // Carousel::create([
-        //     'imgs' => 'London to Paris',
-        // ]);
+        Carousel::create([
+            'imgs' => $fileName,
+        ]);
     }
+    public function uploadFiles(Request $request){
+        Log::debug($request);
+        $fileName = $request->file->getClientOriginalName();
+        $request->file->move(public_path('imgs'), $fileName);
+
+    }
+
 }

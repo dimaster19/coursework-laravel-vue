@@ -38,6 +38,7 @@ Route::get('/getcartdata', [CartController::class, 'getData'])->name("getcartdat
 Route::post('/clearcart', [CartController::class, 'clearCart'])->name("clearcart");
 Route::post('/addorder', [CartController::class, 'addOrder'])->name("addOrder");
 Route::get('/cartcount', [CartController::class, 'cartCount'])->name("cartcount");
+Route::get('/search', [ProductsPageController::class, 'search'])->name("search");
 
 Route::group(['middleware' => ['guest']], function() {
     /**
@@ -74,5 +75,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/updatedata',  [AdminPanelController::class, 'getUpdateData'])->name('getUpdateData');
     Route::post('/adminaction',  [AdminPanelController::class, 'adminAction'])->name('adminaction');
     Route::post('/carousel',  [AdminPanelController::class, 'editCarousel'])->name('editCarousel');
+    Route::post('/filesupload',  [AdminPanelController::class, 'uploadFiles'])->name('filesupload');
 
 });

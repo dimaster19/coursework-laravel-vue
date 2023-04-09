@@ -39,39 +39,14 @@
                 </div>
                 <div class="phones">
                     <a>+7 (949) 453-19-81</a>
+                </div>
+                <div class="phones">
                     <a>+7 (949) 453-19-79</a>
                 </div>
                 <div style="font-weight: 500;">
                     Ежедневно 9:00-18:00
                 </div>
-                <div class="modal1-btn"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Заказать звонок</button></div>
-                <!-- Модальное окно -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Заказать звонок</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="inputName" class="form-label">Ваше имя</label>
-                                        <input type="text" class="form-control" id="inputName">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="inputPhone" class="form-label">Телефон</label>
-                                        <input type="text" class="form-control" id="inputPhone" value="+ 7 (949)">
-                                    </div>
 
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Отправить</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>
@@ -104,10 +79,13 @@
                             </ul>
                         </div>
                     </div>
+                    <form action="/search" method="get" class="form-search needs-validation" validate>
                     <div class="header-search">
-                        <input type="text" placeholder="Поиск по сайту" />
-                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            <input type="text" name="name" id="search_input" placeholder="Введите название товара" required />
+                            <button type="submit"><i class="fa fa-search" required aria-hidden="true"></i></button>
                     </div>
+                    </form>
+
                     <div class="header-cart">
                         <a class="header-link" href="/cart">
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>

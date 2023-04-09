@@ -40,7 +40,10 @@ class ProductsPageController extends Controller
         $price_range[] = $prices->max('price');
         $checked_brands = $brands;
 
-        return view('products', compact('title',  'products', 'category', 'brands', 'checked_brands','price_range'));
+        $sort_price = $price_range;
+
+        return view('products', compact('title',  'products', 'category', 'brands', 'checked_brands','price_range', 'sort_price'));
+
     }
 
     public function sort(Request $request,  $category)
@@ -77,24 +80,39 @@ class ProductsPageController extends Controller
 
         switch ($request->order_id) {
             case 1:
-                $products = $products->orderBy('price', 'ask')->paginate(10)->withPath(URL::full());
+                $products = $products->orderBy('price', 'asc')->paginate(10)->withPath(URL::full());
 
                 break;
             case 2:
                 $products = $products->orderBy('price', 'desc')->paginate(10)->withPath(URL::full());
                 break;
             case 3:
-                $products = $products->orderBy('name', 'ask')->paginate(10)->withPath(URL::full());
+                $products = $products->orderBy('name', 'asc')->paginate(10)->withPath(URL::full());
                 break;
             case 4:
                 $products = $products->orderBy('name', 'desc')->paginate(10)->withPath(URL::full());
                 break;
         }
+        $prices = Product::where('category_id', $cat[0]->id);
 
 
-        $price_range[] = $request->min_price;
-        $price_range[] = $request->max_price;
 
-        return view('products', compact('title',  'products', 'category', 'brands', 'checked_brands', 'price_range'));
+        $prices = Product::where('category_id', $cat[0]->id);
+
+        $price_range = array();
+        $price_range[] = $prices->min('price');
+        $price_range[] = $prices->max('price');
+
+
+        $sort_price = [$request->min_price,  $request->max_price];
+        return view('products', compact('title',  'products', 'category', 'brands', 'checked_brands','price_range', 'sort_price'));
+    }
+
+    public function search (Request $request) {
+        $title = 'Поиск '.$request->name;
+        $name = $request->name;
+        $products =  Product::where('name', 'ILIKE', '%' . $name. '%')->get();
+        return view('search', compact('title',  'products', 'name'));
+
     }
 }

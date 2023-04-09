@@ -2,13 +2,13 @@
 import Slider from '@vueform/slider'
 
 export default {
-    props: ['data', 'category', 'brands', 'price_range', 'checked_brands'],
+    props: ['data', 'category', 'brands', 'price_range', 'checked_brands', 'sort_price'],
     components: {
         Slider,
     },
     data() {
         return {
-            value: [this.price_range[0], this.price_range[1]],
+            value: [this.sort_price[0], this.sort_price[1]],
             orderby: [
                 { name: 'цене, сначало недорогие', id: 1 },
                 { name: 'цене, сначало дорогие', id: 2 },
@@ -99,7 +99,7 @@ export default {
                 <div class="filter-row">
                     <h4>Цена</h4><br>
                     <div style="padding-right: 10px;">
-                        <Slider v-model="value" :max="20000" />
+                        <Slider v-model="value" :min= "parseInt(price_range[0])" :max="parseInt(price_range[1])" />
 
                     </div>
 

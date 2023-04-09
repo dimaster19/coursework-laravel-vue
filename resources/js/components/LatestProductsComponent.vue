@@ -19,6 +19,10 @@ export default {
             .catch(error => {
                 console.log(error);
             })
+
+            var carousel = document.getElementsByClassName('carousel-item')[0]
+            carousel.classList.add("active");
+
     },
     methods: {
         toCartClick: function (e) {

@@ -163,7 +163,7 @@
 
                         <!-- <input type="file" id="carouselimgs" multiple="multiple"><br><br>
                         <button type="button" v-on:click="carouselClick" class="btn btn-primary mt-3">Отправить</button> -->
-                            <h3>Только файлы расширения:'jpeg', 'jpg', 'png </h3>
+                            <h3>Только файлы расширения:'jpeg', 'jpg', 'png', размер: 1920x550  </h3>
                         <DropZone url="http://127.0.0.1:8000/carousel" :uploadOnDrop="true"  method="POST" :headers="csrfHeader" :acceptedFiles="['jpeg', 'jpg', 'png']"  />
                     </div>
 
@@ -180,8 +180,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                     </div>
                     <div class="modal-body">
-
-
+                        <DropZone url="http://127.0.0.1:8000/filesupload" :uploadOnDrop="true"  method="POST" :headers="csrfHeader"   />
                     </div>
 
                 </div>

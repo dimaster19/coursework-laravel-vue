@@ -254,11 +254,16 @@ header {
 }
 
 /* --- */
-
-.header-search {
+.form-search{
     display: flex;
     height: 100%;
     width: 70%;
+    margin: 0 10px;
+}
+.header-search {
+    display: flex;
+    height: 100%;
+    width: 100%;
     margin: 0 10px;
 }
 

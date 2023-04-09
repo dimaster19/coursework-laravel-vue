@@ -9,6 +9,7 @@ import Register from './components/Register.vue'
 import Products from './components/Products.vue'
 import Cart from './components/Cart.vue'
 import Admin from './components/AdminPanel.vue'
+import Search from './components/Search.vue'
 
 
 
@@ -20,6 +21,7 @@ app.component('register', Register)
 app.component('products', Products)
 app.component('cart', Cart)
 app.component('admin-panel', Admin)
+app.component('poisk', Search)
 
 app.mount('#app');
 
